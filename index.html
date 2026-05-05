@@ -755,27 +755,33 @@
   });
 
   // Form submit
-function handleSubmit(btn) {
-  const params = {
-    from_name:    document.querySelector('input[placeholder="Votre nom"]').value,
-    phone:        document.querySelector('input[type="tel"]').value,
-    email:        document.querySelector('input[type="email"]').value,
-    service:      document.querySelector('select').value,
-    message:      document.querySelector('textarea').value,
-    to_email:     "3ae.hk@planet.tn"
-  };
+async function handleSubmit(btn) {
+  const nom     = document.querySelector('input[placeholder="Votre nom"]').value;
+  const tel     = document.querySelector('input[type="tel"]').value;
+  const email   = document.querySelector('input[type="email"]').value;
+  const service = document.querySelector('select').value;
+  const message = document.querySelector('textarea').value;
+
+  if (!nom || !tel) {
+    alert("Veuillez remplir au moins le nom et le téléphone.");
+    return;
+  }
 
   btn.textContent = 'Envoi en cours...';
 
-  emailjs.send("SERVICE_ID", "TEMPLATE_ID", params)
-    .then(() => {
-      btn.textContent = '✅ Message envoyé !';
-      btn.style.background = 'linear-gradient(135deg,#1a8c4e,#27c168)';
-    })
-    .catch(() => {
-      btn.textContent = '❌ Erreur, réessayez';
-      btn.style.background = 'red';
-    });
+  const res = await fetch("https://formspree.io/f/VOTRE_ID_ICI", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({ nom, tel, email, service, message })
+  });
+
+  if (res.ok) {
+    btn.textContent = '✅ Message envoyé !';
+    btn.style.background = 'linear-gradient(135deg,#1a8c4e,#27c168)';
+  } else {
+    btn.textContent = '❌ Erreur, réessayez';
+  }
+}
 }
   
 </script>
