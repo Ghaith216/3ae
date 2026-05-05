@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>3AE Security – Construction & Firefighting Specialists</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --fire-red: #E63012;
+    --fire-orange: #F07A2B;
+    --sky-blue: #2B8FD4;
+    --steel: #1A2A3A;
+    --charcoal: #111820;
+    --white: #FAFAFA;
+    --gray: #8899AA;
+    --light: #EEF3F8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--charcoal);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVBAR ─────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 72px;
+    background: rgba(17,24,32,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(230,48,18,0.25);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo .flame { font-size: 26px; }
+  .nav-logo span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+  .nav-logo span em { color: var(--fire-red); font-style: normal; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--gray);
+    font-weight: 600; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+    transition: color .25s;
+  }
+  .nav-links a:hover { color: var(--fire-red); }
+  .nav-cta {
+    background: var(--fire-red); color: var(--white) !important;
+    padding: 9px 22px; border-radius: 4px;
+    transition: background .25s !important;
+  }
+  .nav-cta:hover { background: var(--fire-orange) !important; color: var(--white) !important; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); border-radius: 2px; }
+
+  /* ─── HERO ────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: grid; place-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 100px 5vw 60px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 50%, rgba(230,48,18,0.13) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 80% at 20% 60%, rgba(43,143,212,0.1) 0%, transparent 70%),
+      var(--charcoal);
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; text-align: center; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(230,48,18,0.12); border: 1px solid rgba(230,48,18,0.4);
+    color: var(--fire-orange); font-size: 12px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 7px 18px; border-radius: 100px; margin-bottom: 28px;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-badge .dot { width: 7px; height: 7px; background: var(--fire-red); border-radius: 50%; animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 8vw, 110px);
+    line-height: 1;
+    letter-spacing: 3px;
+    animation: fadeUp .7s .1s ease both;
+  }
+  h1 .accent { color: var(--fire-red); }
+  h1 .blue { color: var(--sky-blue); }
+  .hero-sub {
+    margin: 22px auto 0; max-width: 600px;
+    font-size: 17px; color: var(--gray); line-height: 1.7; font-weight: 300;
+    animation: fadeUp .7s .2s ease both;
+  }
+  .hero-btns {
+    margin-top: 40px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp .7s .3s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--fire-red), var(--fire-orange));
+    color: var(--white); padding: 14px 36px; border-radius: 6px;
+    font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    box-shadow: 0 8px 30px rgba(230,48,18,0.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(230,48,18,0.5); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 13px 36px; border-radius: 6px; border: 1.5px solid rgba(255,255,255,0.25);
+    font-weight: 600; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;
+    text-decoration: none; cursor: pointer;
+    transition: border-color .2s, background .2s;
+  }
+  .btn-outline:hover { border-color: var(--sky-blue); background: rgba(43,143,212,0.1); }
+
+  .hero-stats {
+    margin-top: 70px; display: flex; gap: 48px; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp .7s .4s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 48px;
+    color: var(--fire-red); letter-spacing: 2px; line-height: 1;
+  }
+  .stat-label { font-size: 11px; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+  /* fire animation */
+  .hero-fire {
+    position: absolute; right: 5vw; top: 50%; transform: translateY(-50%);
+    opacity: .07; font-size: 320px; line-height: 1; user-select: none;
+    animation: sway 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes sway { 0%,100%{transform:translateY(-50%) rotate(-3deg)} 50%{transform:translateY(-52%) rotate(3deg)} }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ─── SECTION COMMON ────────────────────── */
+  section { padding: 100px 5vw; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--fire-red); margin-bottom: 12px;
+  }
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: 2px; line-height: 1.1;
+    color: var(--white);
+  }
+  h2 span { color: var(--fire-red); }
+  .section-desc {
+    color: var(--gray); font-size: 16px; line-height: 1.7; max-width: 520px; margin-top: 14px; font-weight: 300;
+  }
+
+  /* ─── SERVICES ───────────────────────────── */
+  #services { background: var(--steel); }
+  .services-header { text-align: center; margin-bottom: 64px; }
+  .services-header .section-desc { margin: 14px auto 0; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .service-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 36px 30px;
+    transition: transform .3s, border-color .3s, background .3s;
+    cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--fire-red), var(--fire-orange));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .35s;
+  }
+  .service-card:hover { transform: translateY(-6px); border-color: rgba(230,48,18,0.3); background: rgba(230,48,18,0.05); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 42px; margin-bottom: 20px; }
+  .service-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 700; letter-spacing: 0.5px;
+    color: var(--white); margin-bottom: 12px;
+  }
+  .service-card p { color: var(--gray); font-size: 14px; line-height: 1.7; font-weight: 300; }
+  .service-tag {
+    display: inline-block; margin-top: 18px;
+    background: rgba(230,48,18,0.1); border: 1px solid rgba(230,48,18,0.25);
+    color: var(--fire-orange); font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 100px;
+  }
+
+  /* ─── WHY US ────────────────────────────── */
+  #why {
+    background: var(--charcoal);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .why-visual {
+    position: relative; border-radius: 16px; overflow: hidden;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, rgba(230,48,18,0.15), rgba(43,143,212,0.15));
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .why-visual-inner { text-align: center; }
+  .why-visual-inner .big-icon { font-size: 100px; opacity: 0.8; }
+  .why-visual-inner p { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 2px; color: var(--fire-red); margin-top: 12px; }
+  .why-features { display: flex; flex-direction: column; gap: 28px; margin-top: 40px; }
+  .why-item { display: flex; gap: 20px; align-items: flex-start; }
+  .why-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: rgba(230,48,18,0.1); border: 1px solid rgba(230,48,18,0.2);
+    border-radius: 10px; display: grid; place-items: center; font-size: 20px;
+  }
+  .why-item h4 { font-weight: 700; font-size: 16px; margin-bottom: 5px; }
+  .why-item p { color: var(--gray); font-size: 13px; line-height: 1.6; font-weight: 300; }
+
+  /* ─── PROJECTS / REALIZATIONS ────────────── */
+  #projects { background: var(--steel); }
+  .projects-header { margin-bottom: 56px; }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .project-card {
+    border-radius: 10px; overflow: hidden; position: relative;
+    aspect-ratio: 4/3;
+    background: var(--charcoal);
+    border: 1px solid rgba(255,255,255,0.07);
+    display: flex; align-items: flex-end;
+    transition: transform .3s;
+  }
+  .project-card:first-child { grid-column: span 2; }
+  .project-card:hover { transform: scale(1.02); }
+  .project-card-bg {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px; opacity: 0.15;
+    background: linear-gradient(135deg, var(--steel), var(--charcoal));
+  }
+  .project-card-overlay {
+    position: relative; width: 100%; padding: 24px;
+    background: linear-gradient(to top, rgba(17,24,32,0.98) 0%, transparent 100%);
+  }
+  .project-card-overlay h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; }
+  .project-card-overlay p { color: var(--gray); font-size: 12px; margin-top: 4px; }
+  .project-badge {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--fire-red); color: var(--white);
+    font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 100px;
+  }
+
+  /* ─── CERTIFICATIONS ─────────────────────── */
+  #certifications {
+    background: var(--charcoal);
+    text-align: center;
+  }
+  .cert-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 48px; }
+  .cert-item {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 28px 32px; min-width: 200px;
+    transition: border-color .3s, background .3s;
+  }
+  .cert-item:hover { border-color: rgba(43,143,212,0.4); background: rgba(43,143,212,0.05); }
+  .cert-item .cert-icon { font-size: 36px; margin-bottom: 12px; }
+  .cert-item h4 { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+  .cert-item p { color: var(--gray); font-size: 12px; }
+
+  /* ─── CONTACT ────────────────────────────── */
+  #contact { background: var(--steel); }
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 28px; margin-top: 40px; }
+  .contact-row { display: flex; gap: 18px; align-items: flex-start; }
+  .contact-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: rgba(230,48,18,0.1); border: 1px solid rgba(230,48,18,0.2);
+    border-radius: 10px; display: grid; place-items: center; font-size: 20px;
+  }
+  .contact-row h4 { font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .contact-row p, .contact-row a { color: var(--gray); font-size: 14px; text-decoration: none; }
+  .contact-row a:hover { color: var(--fire-red); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); }
+  .form-group input, .form-group textarea, .form-group select {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 14px 16px;
+    color: var(--white); font-family: 'Barlow', sans-serif; font-size: 14px;
+    outline: none; transition: border-color .25s, background .25s;
+    width: 100%;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--fire-red); background: rgba(230,48,18,0.05);
+  }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group select option { background: var(--steel); }
+
+  /* ─── FOOTER ────────────────────────────── */
+  footer {
+    background: var(--charcoal);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 5vw;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+    gap: 20px;
+  }
+  .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; }
+  .footer-brand em { color: var(--fire-red); font-style: normal; }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a { color: var(--gray); text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; transition: color .2s; }
+  .footer-links a:hover { color: var(--fire-red); }
+  footer p { color: var(--gray); font-size: 12px; }
+
+  /* ─── RESPONSIVE ─────────────────────────── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    #why { grid-template-columns: 1fr; }
+    .why-visual { max-width: 400px; margin: 0 auto; }
+    .projects-grid { grid-template-columns: 1fr 1fr; }
+    .project-card:first-child { grid-column: span 2; }
+    .contact-inner { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 70px 5vw; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card:first-child { grid-column: span 1; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+  }
+
+  /* Mobile nav open */
+  .mobile-menu {
+    display: none; position: fixed; inset: 72px 0 0 0; z-index: 998;
+    background: rgba(17,24,32,0.98); backdrop-filter: blur(14px);
+    flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: var(--white); text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 3px; transition: color .2s; }
+  .mobile-menu a:hover { color: var(--fire-red); }
+
+  /* scroll reveal */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s, transform .7s; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">
+    <span class="flame">🔥</span>
+    <span><em>3AE</em> SECURITY</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Pourquoi nous</a></li>
+    <li><a href="#projects">Réalisations</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#why" onclick="toggleMenu()">Pourquoi nous</a>
+  <a href="#projects" onclick="toggleMenu()">Réalisations</a>
+  <a href="#certifications" onclick="toggleMenu()">Certifications</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-fire">🔥</div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Spécialiste en Sécurité Incendie
+    </div>
+    <h1>
+      <span class="accent">PROTECTION</span><br/>
+      <span class="blue">& SÉCURITÉ</span><br/>
+      TOTALE
+    </h1>
+    <p class="hero-sub">
+      3AE Security — votre partenaire de confiance en Tunisie pour la conception, installation et maintenance de systèmes anti-incendie, vidéosurveillance et sécurité globale.
+    </p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Découvrir nos services</a>
+      <a href="#contact" class="btn-outline">Demander un devis</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Ans d'expérience</div></div>
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Projets réalisés</div></div>
+      <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Support technique</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Conformité normes</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div class="section-label">Ce que nous faisons</div>
+    <h2>NOS <span>SERVICES</span></h2>
+    <p class="section-desc">Des solutions complètes de protection contre l'incendie et de sécurité pour les secteurs industriel, commercial et résidentiel.</p>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card reveal">
+      <div class="service-icon">🔥</div>
+      <h3>Systèmes Anti-Incendie</h3>
+      <p>Conception et installation de systèmes de détection et d'extinction incendie conformes aux normes internationales NFPA et EN.</p>
+      <span class="service-tag">Priorité n°1</span>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">💧</div>
+      <h3>Sprinklers & Extinction</h3>
+      <p>Installation de réseaux sprinklers, systèmes CO₂, poudre, mousse et brouillard d'eau pour tous types de locaux.</p>
+      <span class="service-tag">Clé en main</span>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">🚨</div>
+      <h3>Détection & Alarme</h3>
+      <p>Pose de détecteurs de fumée, chaleur, gaz et de centrales d'alarme incendie avec report vers les services de secours.</p>
+      <span class="service-tag">Certifié</span>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">📷</div>
+      <h3>Vidéosurveillance CCTV</h3>
+      <p>Installation de caméras IP HD et 4K, dômes PTZ, systèmes NVR/DVR avec accès à distance via mobile.</p>
+      <span class="service-tag">IP HD 4K</span>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">🚪</div>
+      <h3>Contrôle d'Accès</h3>
+      <p>Systèmes de contrôle d'accès biométrique, badges RFID, digicodes et gestion centralisée des entrées/sorties.</p>
+      <span class="service-tag">Biométrique</span>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">🏗️</div>
+      <h3>Construction Spécialisée</h3>
+      <p>Travaux de génie civil dédiés à la sécurité : locaux techniques, réservoirs incendie, chemins de câbles protégés.</p>
+      <span class="service-tag">Bâtiment</span>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">🛡️</div>
+      <h3>Maintenance Préventive</h3>
+      <p>Contrats de maintenance annuels, vérifications périodiques, tests de déclenchement et mise en conformité réglementaire.</p>
+      <span class="service-tag">Contrat annuel</span>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-icon">📋</div>
+      <h3>Audit & Conseil</h3>
+      <p>Audit de sécurité incendie, plans d'évacuation, formation du personnel et accompagnement à l'obtention des autorisations.</p>
+      <span class="service-tag">Expertise</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-visual reveal">
+    <div class="why-visual-inner">
+      <div class="big-icon">🏆</div>
+      <p>EXCELLENCE & FIABILITÉ</p>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="section-label">Notre différence</div>
+    <h2>POURQUOI <span>NOUS</span><br/>CHOISIR ?</h2>
+    <p class="section-desc">Nous combinons expertise technique, rigueur normative et réactivité pour garantir votre sécurité absolue.</p>
+    <div class="why-features">
+      <div class="why-item">
+        <div class="why-icon">⚡</div>
+        <div>
+          <h4>Réactivité 24/7</h4>
+          <p>Équipe d'intervention disponible 7j/7 pour les urgences techniques et dépannages.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">📐</div>
+        <div>
+          <h4>Ingénierie sur-mesure</h4>
+          <p>Chaque projet est étudié par nos ingénieurs pour une solution parfaitement adaptée à votre bâtiment.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">✅</div>
+        <div>
+          <h4>Conformité normative</h4>
+          <p>Tous nos travaux respectent les normes NFPA, EN 54 et la réglementation tunisienne en vigueur.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🤝</div>
+        <div>
+          <h4>Partenariat long terme</h4>
+          <p>Suivi, maintenance et accompagnement post-installation pour une sécurité durable dans le temps.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header reveal">
+    <div class="section-label">Notre portfolio</div>
+    <h2>NOS <span>RÉALISATIONS</span></h2>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-card-bg">🏭</div>
+      <span class="project-badge">Industriel</span>
+      <div class="project-card-overlay">
+        <h4>Zone Industrielle Ben Arous</h4>
+        <p>Système anti-incendie complet — 12 000 m²</p>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-card-bg">🏨</div>
+      <span class="project-badge">Hôtellerie</span>
+      <div class="project-card-overlay">
+        <h4>Hôtel 5 étoiles Tunis</h4>
+        <p>CCTV + Contrôle d'accès + Sprinklers</p>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-card-bg">🏢</div>
+      <span class="project-badge">Tertiaire</span>
+      <div class="project-card-overlay">
+        <h4>Tour de bureaux La Marsa</h4>
+        <p>Détection incendie & vidéosurveillance IP</p>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-card-bg">🏥</div>
+      <span class="project-badge">Santé</span>
+      <div class="project-card-overlay">
+        <h4>Clinique Privée Sousse</h4>
+        <p>Système d'alarme incendie certifié EN 54</p>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-card-bg">🏬</div>
+      <span class="project-badge">Commerce</span>
+      <div class="project-card-overlay">
+        <h4>Centre Commercial Sfax</h4>
+        <p>Extinction automatique & contrôle d'accès</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="reveal">
+    <div class="section-label">Qualité & Standards</div>
+    <h2>NOS <span>CERTIFICATIONS</span></h2>
+    <p class="section-desc" style="margin:14px auto 0;">Nous respectons les plus hautes normes internationales de sécurité incendie.</p>
+  </div>
+  <div class="cert-row">
+    <div class="cert-item reveal">
+      <div class="cert-icon">🔰</div>
+      <h4>NFPA Standards</h4>
+      <p>National Fire Protection Association</p>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-icon">🇪🇺</div>
+      <h4>EN 54 / EN 12845</h4>
+      <p>Normes européennes incendie</p>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-icon">🏅</div>
+      <h4>ISO 9001</h4>
+      <p>Système de management qualité</p>
+    </div>
+    <div class="cert-item reveal">
+      <div class="cert-icon">⚙️</div>
+      <h4>Agréé MIM Tunisie</h4>
+      <p>Ministère de l'Intérieur & de la Défense</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <div class="section-label">Contactez-nous</div>
+      <h2>DEMANDEZ<br/>VOTRE <span>DEVIS</span></h2>
+      <p class="section-desc">Notre équipe vous répond sous 24h avec une étude personnalisée et gratuite.</p>
+      <div class="contact-info">
+        <div class="contact-row">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Adresse</h4>
+            <p>Tunis, Tunisie</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📱</div>
+          <div>
+            <h4>Téléphone</h4>
+            <a href="tel:+21600000000">+216 XX XXX XXX</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📘</div>
+          <div>
+            <h4>Facebook</h4>
+            <a href="https://www.facebook.com/p/3AE-Security-Services-100063579850128/" target="_blank">3AE Security Services</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <h4>Horaires</h4>
+            <p>Lun–Sam : 08h00 – 18h00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom complet</label>
+          <input type="text" placeholder="Votre nom"/>
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="tel" placeholder="+216 XX XXX XXX"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="votre@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Service souhaité</label>
+        <select>
+          <option value="">-- Choisir un service --</option>
+          <option>Système anti-incendie</option>
+          <option>Sprinklers & Extinction</option>
+          <option>Détection & Alarme</option>
+          <option>Vidéosurveillance CCTV</option>
+          <option>Contrôle d'accès</option>
+          <option>Construction spécialisée</option>
+          <option>Maintenance préventive</option>
+          <option>Audit & Conseil</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Décrivez votre projet (superficie, type de bâtiment, besoin spécifique...)"></textarea>
+      </div>
+      <button class="btn-primary" type="button" onclick="handleSubmit(this)" style="width:100%;font-size:15px;padding:16px;">
+        Envoyer ma demande 🔥
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand"><em>3AE</em> SECURITY SERVICES</div>
+  <nav class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#projects">Réalisations</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.facebook.com/p/3AE-Security-Services-100063579850128/" target="_blank">Facebook</a>
+  </nav>
+  <p>© 2025 3AE Security Services — Tunisie</p>
+</footer>
+
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Stagger cards within grid
+  document.querySelectorAll('.services-grid .service-card, .cert-row .cert-item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.07) + 's';
+  });
+
+  // Form submit
+  function handleSubmit(btn) {
+    btn.textContent = '✅ Message envoyé !';
+    btn.style.background = 'linear-gradient(135deg,#1a8c4e,#27c168)';
+    setTimeout(() => {
+      btn.textContent = 'Envoyer ma demande 🔥';
+      btn.style.background = '';
+    }, 3000);
+  }
+</script>
+</body>
+</html>
