@@ -756,34 +756,40 @@
 
   // Form submit
 async function handleSubmit(btn) {
-  const nom     = document.querySelector('input[placeholder="Votre nom"]').value;
-  const tel     = document.querySelector('input[type="tel"]').value;
-  const email   = document.querySelector('input[type="email"]').value;
+  const nom     = document.querySelector('input[placeholder="Votre nom"]').value.trim();
+  const tel     = document.querySelector('input[type="tel"]').value.trim();
+  const email   = document.querySelector('input[type="email"]').value.trim();
   const service = document.querySelector('select').value;
-  const message = document.querySelector('textarea').value;
+  const message = document.querySelector('textarea').value.trim();
 
   if (!nom || !tel) {
     alert("Veuillez remplir au moins le nom et le téléphone.");
     return;
   }
 
-  btn.textContent = 'Envoi en cours...';
+  btn.textContent = '⏳ Envoi en cours...';
+  btn.disabled = true;
 
-  const res = await fetch("https://formspree.io/f/VOTRE_ID_ICI", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Accept": "application/json" },
-    body: JSON.stringify({ nom, tel, email, service, message })
-  });
+  try {
+    const res = await fetch("https://formspree.io/f/mpqbdndw", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ nom, tel, email, service, message })
+    });
 
-  if (res.ok) {
-    btn.textContent = '✅ Message envoyé !';
-    btn.style.background = 'linear-gradient(135deg,#1a8c4e,#27c168)';
-  } else {
+    if (res.ok) {
+      btn.textContent = '✅ Message envoyé !';
+      btn.style.background = 'linear-gradient(135deg,#1a8c4e,#27c168)';
+      btn.disabled = false;
+    } else {
+      throw new Error();
+    }
+  } catch {
     btn.textContent = '❌ Erreur, réessayez';
+    btn.disabled = false;
   }
 }
-}
-  
+
 </script>
 </body>
 </html>
